@@ -1,0 +1,9 @@
+Package: cortisolR
+Type: Package
+Title: Analyse Cortisol Data
+Version: 0.1.0
+Authors@R: person("Seth", "Berry", email = "seth.berry@nd.edu", role = c("aut", "cre"))
+person("Brandon", "Greenawalt", email = "bgreenawa@nd.edu", role = c("aut", "cre"))
+Description: This package implements methods devised by the Wirth Lab at the University of Notre Dame.
+License: MIT + file LICENSE
+LazyData: TRUE
