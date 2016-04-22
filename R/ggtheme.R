@@ -5,6 +5,9 @@
 #' @examples
 #'
 #' @importFrom ggplot2 theme
+#' @importFrom ggplot2 element_text
+#' @importFrom ggplot2 element_rect
+#' @importFrom ggplot2 element_blank
 
 ggtheme = function() {
   theme(
