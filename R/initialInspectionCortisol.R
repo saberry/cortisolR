@@ -2,13 +2,15 @@
 #'
 #' @description This function does an intial inspection on the data.
 #'
-#' @usage initialInspect(dat, calibName, calibValue, nVar, drop)
+#' @usage initialInspectCortisol(dat, calibName, calibValue, nVar, drop)
 #' @param dat
 #' A data frame
 #' @param calibName
 #' The name of the calibration variable (usually STAND or A)
 #' @param calibValue
 #' The value for calibration (usually 0)
+#' @param
+#' The name for the CPM variable (usually CPM)
 #' @param nVar
 #' The ID variable; is often "N".
 #' @param drop
@@ -22,38 +24,40 @@
 #' @importFrom ggplot2 geom_smooth
 #' @importFrom ggplot2 %+%
 #' @importFrom ggplot2 aes
-initialInspect = function(dat, calibName, calibValue,
+initialInspectCortisol = function(dat, calibName, calibValue, cpmName,
                           nVar = NULL, drop = NULL) {
+
+  if(calibName %in% names(dat) == FALSE) stop(paste(calibName, "is not in your data.", sep = " "))
 
   if (is.null(drop)) {
     initialDat = dat[dat[, calibName] %in% calibValue, ]
   } else {
     initialDat = dat[dat[, calibName] %in% calibValue & corDat[, nVar] != drop, ]
+    if(nVar %in% names(dat) == FALSE) stop(paste(nVar, "is not in your data.", sep = " "))
   }
 
-  cpmMean = mean(initialDat$CPM)
+  cpmMean = mean(dat[[cpmName]], na.rm = TRUE)
 
-  bindings = (dat$CPM/cpmMean) * 100
+  bindings = (dat[[cpmName]]/cpmMean) * 100
 
   logVals = log((100 - bindings) / bindings)
 
-  logStd = log(dat$STAND)
+  logStd = log(dat[[calibName]])
 
   plotDat = cbind(dat, bindings, logVals, logStd)
 
   plotDat = plotDat
 
-
-  p1 = ggplot(plotDat, aes(logStd, STAND)) +
+  p1 = ggplot(plotDat, aes(logStd, plotDat[[calibName]])) +
     geom_smooth(span = .5) +
     geom_point() +
     ggtheme()
 
-  p2 = ggplot(plotDat, aes(logVals, STAND)) +
+  p2 = ggplot(plotDat, aes(logVals, plotDat[[calibName]])) +
     geom_point() +
     ggtheme()
 
-  p3 = ggplot(plotDat, aes(logVals, logStd)) +
+  p3 = ggplot(plotDat, aes(logVals, plotDat[[calibName]])) +
     geom_smooth(method = "lm") +
     geom_point() +
     ggtheme()
