@@ -9,15 +9,15 @@ initialInspectCortisol(dat, calibName, calibValue, nVar, drop)
 \arguments{
 \item{dat}{A data frame}
 
-\item{calibName}{The name of the calibration variable (usually STAND or A)}
+\item{calibVar}{The name of the calibration variable (usually STAND or A)}
 
 \item{calibValue}{The value for calibration (usually 0)}
 
-\item{nVar}{The ID variable; is often "N".}
+\item{cpmVar}{The name for the CPM variable (usually CPM)}
+
+\item{idVar}{The ID variable; is often "N".}
 
 \item{drop}{Which participant to drop.}
-
-\item{The}{name for the CPM variable (usually CPM)}
 }
 \description{
 This function does an intial inspection on the data.
