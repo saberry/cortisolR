@@ -33,11 +33,9 @@ backEstimateCortisol = function(dat, logStdVar, logValVar,
 
   plotDat = cbind(dat, estConc)
 
-  plotDat = na.omit(plotDat)
-
   maxCalVal = as.numeric(max(plotDat[[calibVar]]) + (max(plotDat[[calibVar]]) * .25))
 
-  ggplot(plotDat, aes(plotDat[["estConc"]], plotDat[[calibVar]])) +
+  suppressWarnings(ggplot(plotDat, aes(plotDat[["estConc"]], plotDat[[calibVar]])) +
     geom_smooth(span = .5) +
     geom_point() +
     scale_y_continuous(name = "Calibration Variable",
@@ -45,4 +43,7 @@ backEstimateCortisol = function(dat, logStdVar, logValVar,
     scale_x_continuous(name = "Estimated Concentration",
                        limits = c(0, as.numeric(maxCalVal))) +
     ggtheme()
+  )
+
+  return(plotDat)
 }
