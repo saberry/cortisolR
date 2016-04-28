@@ -16,8 +16,20 @@
 #' @param drop
 #' Which participant to drop.
 #' @export
-#'
 #' @examples
+#'
+#' dat = data.frame(N = 1:10,
+#'                  CPM = c(44396.5, 47774.5, 23676.0, 24290.3, 23541.0,
+#'                          20108.7, 20101.3, 19383.7, 17013.7, 17678.7),
+#'                  STAND = c(NA, NA, 0, 0, 1,
+#'                            1, 3, 10, 30, 100))
+#' # The First Pass #
+#'
+#' initialInspectCortisol(dat, "STAND", 0, "CPM")
+#'
+#' # Deleting Observations #
+#'
+#' initialInspectCortisol(dat, "STAND", 0, "CPM", "N", 1)
 #'
 #' @importFrom ggplot2 ggplot
 #' @importFrom ggplot2 geom_point
