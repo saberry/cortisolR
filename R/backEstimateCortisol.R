@@ -24,10 +24,14 @@
 #' @importFrom ggplot2 geom_smooth
 #' @importFrom ggplot2 %+%
 #' @importFrom ggplot2 aes
+#' @importFrom ggplot2 scale_y_continuous
+#' @importFrom ggplot2 scale_x_continuous
 
 backEstimateCortisol = function(dat, calibVar) {
 
-  backEstMod = lm(dat[["logStd"]] ~ dat[["logVals"]], data = dat)
+  dat0 = dat[dat[["logStd"]] >= 0, ]
+
+  backEstMod = lm(dat0[["logStd"]] ~ dat0[["logVals"]], data = dat0)
 
   logStdConstant = backEstMod$coefficients[[1]]
 

@@ -12,15 +12,17 @@
 #' @examples
 sensitivity = function(dat, calibVar, calibVal, logStdVar, logValVar) {
 
-  testDat = dat[dat[, calibVar] %in% calibVal, ]
+  dat0 = dat[dat[[calibVar]] == 0, ]
 
-  bindingsSD = sd(testDat[["bindings"]], na.rm = TRUE)
+  bindingsSD = sd(dat0[["bindings"]], na.rm = TRUE)
 
   lowerBinding = 100 - (3 * bindingsSD)
 
   lowerBindingLog = log((100 - lowerBinding) / lowerBinding)
 
-  backEstMod = lm(dat[[logStdVar]] ~ dat[[logValVar]], data = dat)
+  dat0 = dat[dat[["logStd"]] >= 0, ]
+
+  backEstMod = lm(dat0[[logStdVar]] ~ dat0[[logValVar]], data = dat0)
 
   logStdConstant = backEstMod$coefficients[[1]]
 

@@ -36,6 +36,8 @@
 #' @importFrom ggplot2 geom_smooth
 #' @importFrom ggplot2 %+%
 #' @importFrom ggplot2 aes
+#' @importFrom ggplot2 scale_y_continuous
+#' @importFrom ggplot2 ggtitle
 
 initialInspectCortisol = function(dat, calibVar, calibValue, cpmVar,
                           idVar = NULL, drop = NULL) {
@@ -49,7 +51,9 @@ initialInspectCortisol = function(dat, calibVar, calibValue, cpmVar,
     if(idVar %in% names(dat) == FALSE) stop(paste(idVar, "is not in your data.", sep = " "))
   }
 
-  cpmMean = mean(dat[[cpmVar]], na.rm = TRUE)
+  standOnly = dat[dat[[calibVar]] == 0,]
+
+  cpmMean = mean(standOnly[[cpmVar]], na.rm = TRUE)
 
   bindings = (dat[[cpmVar]]/cpmMean) * 100
 
@@ -101,4 +105,7 @@ initialInspectCortisol = function(dat, calibVar, calibValue, cpmVar,
   multiplot(p1, p2, p3, p4, p5)
 
   return(plotDat)
+
+  logModSum
+
 }
